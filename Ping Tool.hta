@@ -1,0 +1,62 @@
+<!-- Script was wrote by Kerrigan Taiga 4/12/2018-->
+<html>
+<head>
+<title>Ping Tool</title>
+<HTA:APPLICATION 
+     APPLICATIONNAME="Ping Tool by Kerrigan Taiga"
+	 ID="objPing_Info" 
+     SCROLL="no"
+     SINGLEINSTANCE="yes"
+     icon="http://www.iconj.com/ico/e/j/ejnci5kr9n.ico"
+</head>
+
+<script runat="server" language="VBScript">
+
+	Sub Window_OnLoad ' On Load, resize and move 
+		window.resizeTo 200,130 ' X, Y 
+		moveTo 1704 , 489
+	End Sub
+	
+	Sub Run_Cmd(strCommand) ' Opens CMD and runs Ping	
+		Dim IP_Address
+		IP_Address = Replace(strCommand,"	","")
+		oSelection = document.getElementById("MySelection").value
+		Set objShell = CreateObject("WScript.Shell")
+		objShell.Run "%COMSPEC% /k ping " & oSelection & IP_Address
+		' Call the save function
+		Call saveData(IP_Address)
+	End Sub
+
+	' Saves input to file root dir	
+	Sub saveData(strLog) 
+		
+		' Get the current path of app 
+		FullName = replace(objPing_Info.commandLine,chr(34),"")  
+		arrFN=split(FullName,"\")  
+		FileName = arrFN(ubound(arrFN))  
+		SourceDir=replace(FullName,FileName,"")  
+		
+		' Write to file
+		Dim fso, f
+		Set fso = CreateObject("Scripting.FileSystemObject") 
+		Set f = fso.OpenTextFile(SourceDir & "ping.txt", 8, true) 
+		f.WriteLine(Now) & " " & strLog
+		' f.WriteLine(strLog) 
+		f.Close
+    End Sub
+	
+	
+</SCRIPT>
+
+<body>
+	<!–– html code here ––>
+<select size="1" name="selection" id="MySelection">
+		<option value="-t ">ping -t</option>
+		<option value="-n 100 ">ping -n 100</option>
+</select> 
+<br>
+<input type="text" Name="input" size="10"style="width:100%" value="IP Address" onclick='javascript: this.value = ""' style="background-color:lightblue">
+<input type="submit" name="btnClick" value="Run Ping" onclick="Run_Cmd(input.value)">
+
+
+</body>

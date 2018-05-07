@@ -1,0 +1,64 @@
+<!-- Script was wrote by Kerrigan Taiga 4/12/2018-->
+<html>
+<head>
+<title>LTE</title>
+<HTA:APPLICATION 
+     APPLICATIONNAME="LTE Tool by Kerrigan Taiga"
+	 ID="objLTE_Info" 
+     SCROLL="no"
+     SINGLEINSTANCE="yes"
+     icon="http://www.iconj.com/ico/o/s/os1lxs26e8.ico"
+
+</head>
+
+<script runat="server" language="VBScript">
+	Sub Window_OnLoad
+		window.resizeTo 200,130 ' Resize Window W, H
+		moveTo 1700 , 203
+	End Sub
+
+	' Opens https and http
+	Sub Run_LTE(strCommand) ' Open LTE Web Panel
+	
+		Dim IP_Address
+		IP_Address = Replace(strCommand,"	","")
+		Set browobj = CreateObject("Wscript.Shell")
+		browobj.Run "chrome -url https://" & IP_Address & ":8080"
+		' browobj.Run "chrome -url http://" & IP_Address & ":8080"
+		' Run_Cmd(strCommand)
+	End Sub
+		
+	Sub Run_Cmd(strCommand) ' Opens CMD and runs Ping	
+		Set objShell = CreateObject("WScript.Shell")
+		objShell.Run "%COMSPEC% /k ping -t " & strCommand
+		' Call the save function (Disabled for LTE App)
+		Call saveData(strCommand)
+	End Sub
+
+
+	Sub saveData(strLog) ' Saves input to file root dir	
+		
+		' Get the current path of app 
+		FullName = replace(objLTE_Info.commandLine,chr(34),"")  
+		arrFN=split(FullName,"\")  
+		FileName = arrFN(ubound(arrFN))  
+		SourceDir=replace(FullName,FileName,"")  
+		
+		' Write to file
+		Dim fso, f
+		Set fso = CreateObject("Scripting.FileSystemObject") 
+		Set f = fso.OpenTextFile(SourceDir & "ping.txt", 8, true) 
+		f.WriteLine(Now) & " " & strLog
+		' f.WriteLine(strLog) 
+		f.Close
+    End Sub
+	
+</SCRIPT>
+
+<body>
+	<!–– html code here ––>
+<font color="blue">Open Green Packet</font><br>
+		<input type="text" Name="lte_input" id="lte_id" size="10"style="width:100%" value="Green Packet IP" onclick='javascript: this.value = ""' style="background-color:lightblue">
+		<input type="submit" title="Open LTE and ZTE in Chrome and runs ping on ODU" value="Open LTE" onclick="Run_LTE(lte_input.value)">
+
+</body>

@@ -1,0 +1,49 @@
+<!-- Script was wrote by Kerrigan Taiga 4/12/2018-->
+<html>
+<head>
+<title>Quick Lead</title>
+<HTA:APPLICATION 
+     APPLICATIONNAME="Sugar Quick Lead"
+     SCROLL="no"
+     SINGLEINSTANCE="yes"
+    
+
+	 
+	<style type="text/css">
+		.rightAL { text-align: right; }
+	</style>
+	 
+</head>
+
+<SCRIPT LANGUAGE="VBScript">
+	window.resizeTo 180,245 ' Resize Window W, H
+	
+	Sub Run_Sugar()
+	
+		Dim firstSTR, lastSTR, streetSTR, citySTR, stateSTR, postalSTR
+		
+		firstSTR = document.getElementById("name_input").value
+		lastSTR = document.getElementById("last_input").value
+		streetSTR = document.getElementById("street_input").value
+		citySTR = document.getElementById("city_input").value
+		stateSTR = document.getElementById("state_input").value
+		postalSTR = document.getElementById("postal_input").value
+		Set browobj = CreateObject("Wscript.Shell")
+		browobj.Run "chrome -url https://sugar/index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView&first_name=" & firstSTR & "&last_name=" & lastSTR & "&primary_address_street=" & streetSTR & "&primary_address_city=" & citySTR & "&primary_address_state=" & stateSTR & "&primary_address_postalcode=" & postalSTR
+	End Sub
+	
+</SCRIPT>
+
+<body>
+	<!–– html code here ––>
+
+		<font color="blue">Sugar Quick Lead</font><br>
+		<input type="text" id="name_input" size="10"style="width:100%" value="First" onclick='javascript: this.value = ""' style="background-color:lightblue"> 
+		<input type="text" id="last_input" size="10"style="width:100%" value="Last" onclick='javascript: this.value = ""' style="background-color:lightblue"> 
+		<input type="text" id="street_input" size="10"style="width:100%" value="Street" onclick='javascript: this.value = ""' style="background-color:lightblue"> 
+		<input type="text" id="state_input" size="10"style="width:100%" value="State" onclick='javascript: this.value = ""' style="background-color:lightblue"> 
+		<input type="text" id="city_input" size="10"style="width:100%" value="City" onclick='javascript: this.value = ""' style="background-color:lightblue"> 
+		<input type="text" id="postal_input" size="10"style="width:100%" value="Postal" onclick='javascript: this.value = ""' style="background-color:lightblue"> 
+		<input type="submit" title="Opens Quick Search in SugarCRM" value="Create Lead" onclick="Run_Sugar()">
+
+</body>

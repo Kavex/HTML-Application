@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>MAC</title>
+<!-- Script was wrote by Kerrigan Taiga 3/13/2018-->
+<HTA:APPLICATION 
+     APPLICATIONNAME="MAC Address Converter"
+     SCROLL="no"
+     BORDER="DIALOG"
+     MAXIMIZEBUTTON="NO"
+     SINGLEINSTANCE="yes"
+     icon="http://www.iconj.com/ico/w/8/w8iauwijie.ico"
+
+</head>
+
+<SCRIPT LANGUAGE="VBScript">
+
+	Sub Window_OnLoad()
+		window.resizeTo 200,125 ' Resize Window W, H
+	End Sub	
+	Sub Run_CVT(strCommand)
+		Dim txt
+		txt = Replace(strCommand,":","-")
+		DataArea.InnerHTML = "Converted and coppied"
+		document.parentwindow.clipboardData.SetData "text", txt
+	End Sub
+</SCRIPT>
+
+<body>
+	<!–– html code here ––>
+<input type="text" Name="input" size="10"style="width:100%" value="MAC Address" onclick='javascript: this.value = ""' style="background-color:lightblue">
+<input type="submit" name="btnClick" value="Convert MAC" onclick="Run_CVT(input.value)">
+<br>
+<span id = "DataArea">No Mac Address</span>
+
+</body>

@@ -1,0 +1,53 @@
+<!-- Script was wrote by Kerrigan Taiga 4/12/2018-->
+<html>
+<head>
+<title>MAC</title>
+<HTA:APPLICATION 
+     APPLICATIONNAME="MAC Address Lookup"
+	 ID="objMAC_Info" 
+     SCROLL="no"
+     SINGLEINSTANCE="yes"
+     icon="http://www.iconj.com/ico/z/7/z7pcsnbw85.ico"
+>
+</head>
+
+<SCRIPT LANGUAGE="VBScript">
+	Sub Window_OnLoad
+		window.resizeTo 200,130 ' X, Y 
+		moveTo 1705 , 620
+	End Sub
+	
+	Sub Run_MAC(strCommand)
+		Dim mac_add, mac_addS
+		mac_addS= Replace(strCommand,"	","")
+		mac_add = Replace(mac_addS,":","")
+		Set objShell = CreateObject("Wscript.Shell")
+		objShell.Run "chrome -url https://aruljohn.com/mac/" & mac_add
+		Call saveData(mac_add)
+	End Sub
+	
+	Sub saveData(strLog) 
+		
+		' Get the current path of app 
+		FullName = replace(objMAC_Info.commandLine,chr(34),"")  
+		arrFN=split(FullName,"\")  
+		FileName = arrFN(ubound(arrFN))  
+		SourceDir=replace(FullName,FileName,"")  
+		
+		' Write to file
+		Dim fso, f
+		Set fso = CreateObject("Scripting.FileSystemObject") 
+		Set f = fso.OpenTextFile(SourceDir & "mac.txt", 8, true) 
+		f.WriteLine(Now) & " " & strLog 
+		f.Close
+    End Sub
+</SCRIPT>
+
+<body>
+	<!–– html code here ––>
+
+		<font color="blue">MAC Address Lookup</font><br>
+		<input type="text" Name="mac_input" size="10"style="width:100%" value="MAC Address" onclick='javascript: this.value = ""' style="background-color:lightblue"> 
+		<input type="submit" title="Opens MAC Address Lookup" value="Lookup" onclick="Run_MAC(mac_input.value)">
+
+</body>

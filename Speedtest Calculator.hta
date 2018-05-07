@@ -1,0 +1,34 @@
+<!-- Script was wrote by Kerrigan Taiga 4/12/2018-->
+<html>
+<head>
+<title>STC</title>
+<HTA:APPLICATION 
+     APPLICATIONNAME="SpeedTest Calculator by Kerrigan Taiga"
+     SCROLL="no"
+     BORDER="DIALOG"
+     MAXIMIZEBUTTON="NO"
+     SINGLEINSTANCE="yes"
+     icon="http://www.iconj.com/ico/r/s/rsbyskuf8l.ico"
+>
+</head>
+
+<SCRIPT LANGUAGE="VBScript">
+	window.resizeTo 170,170 ' Resize Window W, H
+	
+	Sub Run_Calc(strCommand)
+		Dim newData
+		newData = strCommand * (60/100)
+		DataArea.InnerHTML = "60% of " & strCommand & "Mbps = " & newData & "Mbps"
+	End Sub
+	
+	
+</SCRIPT>
+
+<body>
+	<!–– html code here ––>
+<font color="blue">Speedtest Calculator</font><br>
+<input type="text" Name="input" size="10"style="width:30%" value="20" onclick='javascript: this.value = ""' style="background-color:lightblue">Mbps
+<input type="submit" name="btnClick" value="Calculate" onclick="Run_Calc(input.value)">
+<br>
+<span id = "DataArea">60% of 20Mbps = 12Mbps</span>
+</body>
